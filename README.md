@@ -1,15 +1,15 @@
 # GROK-TakeHomeExam
 Grok Academy - take home exam
 
-usage: main.py [-h] [-s SIZE] [-g GEN]
+Usage: python main.py [-h] [-s SIZE] [-g GEN]
 
-optional arguments:
+Optional arguments:
 
   -h, --help            show this help message and exit
   
-  -s SIZE, --size SIZE  World size
+  -s SIZE, --size SIZE  World size. Default is 21
   
-  -g GEN, --gen GEN     Number of generation
+  -g GEN, --gen GEN     Number of generation. Default is 10
   
   
 
