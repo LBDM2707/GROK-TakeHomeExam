@@ -1,3 +1,6 @@
+import argparse
+
+
 class World:
     class Box:
         def __init__(self, is_filled: bool = False) -> None:
@@ -18,7 +21,7 @@ class World:
     def __init__(self, size: int = 21) -> None:
         boxes = []
         for i in range(0, size + 2):
-            if i == (size - 1) / 2 + 1:
+            if i == int((size - 1) / 2 + 1):
                 boxes.append(self.Box(True))
             else:
                 boxes.append(self.Box(False))
@@ -51,10 +54,13 @@ class World:
         return result
 
 
-def main():
-    the_world = World(21)
+def main(args):
+    if args.size:
+        the_world = World(args.size)
+    else:
+        the_world = World()
     print(f"Start:\t{the_world}")
-    for i in range(10):
+    for i in range(args.gen if args.gen else 10):
         the_world.evolve()
         print(f"Gen {the_world.get_generation()}:\t{the_world}")
 
@@ -62,4 +68,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    argParser = argparse.ArgumentParser()
+    argParser.add_argument("-s", "--size", type=int, help="World size")
+    argParser.add_argument("-g", "--gen", type=int, help="Number of generation")
+    args = argParser.parse_args()
+    main(args)
