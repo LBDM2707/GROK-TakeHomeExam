@@ -20,8 +20,8 @@ class World:
 
     def __init__(self, size: int = 21) -> None:
         boxes = []
-        for i in range(0, size + 2):
-            if i == int((size - 1) / 2 + 1):
+        for i in range(0, size):
+            if i == int(size / 2):
                 boxes.append(self.Box(True))
             else:
                 boxes.append(self.Box(False))
@@ -33,23 +33,17 @@ class World:
         return self.gen
 
     def evolve(self) -> None:
-        new_boxes = [self.boxes[0]]
-        for i in range(1, self.size + 1):
-            new_boxes.append(
-                self.Box(
-                    self.boxes[i].evolve_val(
-                        self.boxes[i - 1].is_filled, self.boxes[i + 1].is_filled
-                    )
-                )
-            )
-        new_boxes.append(self.boxes[self.size + 1])
+        new_boxes = []
+        for i in range(self.size):
+            left = False if i == 0 else self.boxes[i - 1].is_filled
+            right = False if i == self.size - 1 else self.boxes[i + 1].is_filled
+            new_boxes.append(self.Box(self.boxes[i].evolve_val(left, right)))
         self.boxes = new_boxes
         self.gen += 1
-        pass
 
     def __str__(self) -> str:
         result = ""
-        for box in self.boxes[1:-1]:
+        for box in self.boxes:
             result += str(box)
         return result
 
@@ -62,7 +56,7 @@ def main(args):
     print(f"Start:\t{the_world}")
     for i in range(args.gen if args.gen else 10):
         the_world.evolve()
-        print(f"Gen {the_world.get_generation()}:\t{the_world}")
+        print(f"Gen {the_world.gen}:\t{the_world}")
 
     pass
 
